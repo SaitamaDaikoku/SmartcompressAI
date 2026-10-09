@@ -1,0 +1,391 @@
+{% extends "base.html" %}
+
+{% block title %}Analysis & Compression - {{ analysis.filename }} - SmartCompress AI{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Breadcrumb & Navigation -->
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('index') }}" class="text-decoration-none text-secondary"><i class="bi bi-house me-1"></i>Home</a></li>
+            <li class="breadcrumb-item active text-white" aria-current="page">Analysis: {{ analysis.filename }}</li>
+        </ol>
+    </nav>
+
+    <!-- Information Density Advisory Alert (if applicable) -->
+    {% if recommendation.warning %}
+    <div class="alert alert-dark border border-secondary bg-dark shadow-sm d-flex align-items-start gap-3 p-3 rounded-3 mb-4" role="alert">
+        <i class="bi bi-info-circle fs-3 text-secondary flex-shrink-0"></i>
+        <div>
+            <h6 class="alert-heading fw-bold text-white mb-1">Information Density & Storage Advisory</h6>
+            <p class="mb-0 small text-secondary-light">{{ recommendation.warning }}</p>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Top Grid: Metadata & Entropy -->
+    <div class="row g-4 mb-4">
+        <!-- Card 1: File Information -->
+        <div class="col-lg-6">
+            <div class="card glass-card h-100 p-4 border-secondary border-opacity-50 shadow-sm">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h5 class="font-outfit text-white fw-bold mb-0">
+                        {% if analysis.is_directory %}
+                        <i class="bi bi-folder text-secondary me-2"></i>Folder Hierarchy
+                        {% else %}
+                        <i class="bi bi-file-earmark-code text-secondary me-2"></i>File Metadata
+                        {% endif %}
+                    </h5>
+                    <span class="badge bg-dark border border-secondary text-secondary-light">
+                        {{ analysis.category }}
+                    </span>
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="table table-dark table-borderless table-sm mb-0">
+                        <tbody>
+                            <tr>
+                                <td class="text-muted w-40">{% if analysis.is_directory %}Folder Name:{% else %}Filename:{% endif %}</td>
+                                <td class="text-white fw-semibold text-break">{{ analysis.filename }}</td>
+                            </tr>
+                            {% if analysis.is_directory %}
+                            <tr>
+                                <td class="text-muted">Total Files:</td>
+                                <td class="text-white fw-semibold"><i class="bi bi-files me-1 text-secondary"></i>{{ analysis.file_count }} files across hierarchy</td>
+                            </tr>
+                            {% endif %}
+                            <tr>
+                                <td class="text-muted">Original Size:</td>
+                                <td class="text-white">{{ analysis.size_display }} <small class="text-muted">({{ "{:,}".format(analysis.size_bytes) }} bytes)</small></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">MIME Type:</td>
+                                <td class="text-secondary-light">{{ analysis.mime_type }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Format:</td>
+                                <td class="text-white">
+                                    {% if analysis.is_directory %}
+                                    <span class="badge bg-dark border border-secondary text-white"><i class="bi bi-folder me-1 text-secondary"></i>Folder / Tree</span>
+                                    {% else %}
+                                    <span class="badge bg-dark border border-secondary text-white">{{ analysis.extension }}</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">SHA-256 Hash:</td>
+                                <td class="text-secondary-light small font-monospace text-break">{{ analysis.sha256 }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 2: Shannon Entropy & Theoretical Interpretation -->
+        <div class="col-lg-6">
+            <div class="card glass-card h-100 p-4 border-secondary border-opacity-50 shadow-sm">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h5 class="font-outfit text-white fw-bold mb-0">
+                        <i class="bi bi-activity text-secondary me-2"></i>Information Theory (Shannon Entropy)
+                    </h5>
+                    <span class="badge bg-dark border border-secondary text-white px-2 py-1">
+                        {{ analysis.entropy_details.compressibility }}
+                    </span>
+                </div>
+
+                <div class="d-flex align-items-baseline gap-2 mb-2">
+                    <span class="display-6 fw-bold text-white">{{ analysis.entropy }}</span>
+                    <span class="text-muted fs-6">/ 8.0000 bits per byte</span>
+                </div>
+
+                <!-- Entropy Meter Progress Bar -->
+                <div class="progress bg-dark border border-secondary border-opacity-50 mb-3" style="height: 14px;">
+                    <div class="progress-bar bg-light" 
+                         role="progressbar" 
+                         style="width: {{ analysis.entropy_details.percentage_of_max }}%;" 
+                         aria-valuenow="{{ analysis.entropy }}" 
+                         aria-valuemin="0" 
+                         aria-valuemax="8">
+                    </div>
+                </div>
+
+                <div class="p-3 bg-dark bg-opacity-70 rounded border border-secondary border-opacity-40 mt-auto">
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                        <strong class="text-white small">ISM Scientific Interpretation:</strong>
+                    </div>
+                    <p class="small text-secondary-light mb-0">{{ analysis.entropy_details.explanation }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recommendation & Compression Action Panel -->
+    <div class="card glass-card border-secondary border-opacity-50 shadow-lg p-4 mb-4">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-7">
+                <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+                    <span class="badge bg-dark border border-secondary text-white px-3 py-1 fs-6 fw-semibold">
+                        <i class="bi bi-stars me-1 text-secondary"></i> Recommended: {{ recommendation.recommended_algorithm }}
+                    </span>
+                    <span class="badge bg-dark text-secondary border border-secondary px-2 py-1">
+                        Source: {{ recommendation.recommendation_source }}
+                    </span>
+                    {% if recommendation.model_confidence %}
+                    <span class="badge bg-dark text-secondary border border-secondary px-2 py-1">
+                        Confidence: {{ recommendation.model_confidence_pct }}%
+                    </span>
+                    {% endif %}
+                </div>
+                <h4 class="text-white font-outfit fw-bold mb-2">Engine Justification</h4>
+                <p class="text-secondary-light mb-3">{{ recommendation.explanation }}</p>
+
+                <div class="small text-muted">
+                    <i class="bi bi-info-circle me-1"></i>
+                    Optimization Preference: <span class="text-white text-capitalize">{{ preference }}</span>. You may proceed with the recommended algorithm or choose another compatible algorithm below.
+                </div>
+            </div>
+
+            <!-- Compression Form & Benchmark Button -->
+            <div class="col-lg-5">
+                <div class="p-3 bg-dark rounded border border-secondary border-opacity-50">
+                    <form action="{{ url_for('compress', operation_id=operation_id) }}" method="POST" id="compressForm">
+                        <label class="form-label text-white fw-semibold small mb-2">
+                            Select Algorithm to Execute:
+                        </label>
+                        <div class="input-group mb-3">
+                            <select name="algorithm" id="algorithmSelect" class="form-select bg-slate-900 text-white border-secondary">
+                                {% for algo in supported_algorithms %}
+                                {% if algo != 'PDF-Deflate' or analysis.extension.lower() == '.pdf' %}
+                                <option value="{{ algo }}" {% if algo == recommendation.recommended_algorithm %}selected{% endif %}>
+                                    {{ algo }}{% if algo == 'PDF-Deflate' %} (High-Reduction PDF Stream &amp; Image Optimizer){% elif algo == '7Z' %} (Extreme LZMA2 Solid Archive){% elif algo == 'ZIP' %} (Universal Deflate Archive){% endif %}{% if algo == recommendation.recommended_algorithm %} (Recommended){% endif %}
+                                </option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                            <button type="submit" class="btn btn-primary-gradient px-4 fw-bold" id="compressBtn">
+                                <span class="spinner-border spinner-border-sm me-1 d-none" id="compressSpinner"></span>
+                                <i class="bi bi-file-earmark-zip me-1" id="compressIcon"></i> Compress Now
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Algorithm Benchmarking Button -->
+                    <div class="d-grid">
+                        <button type="button" class="btn btn-outline-secondary text-white btn-sm py-2" id="benchmarkBtn" onclick="runBenchmark('{{ operation_id }}')">
+                            <span class="spinner-border spinner-border-sm me-1 d-none" id="benchSpinner"></span>
+                            <i class="bi bi-speedometer me-1" id="benchIcon"></i> Benchmark Algorithms on This File
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Benchmark Results Container (Dynamic via AJAX) -->
+    <div id="benchmarkContainer" class="card glass-card border-secondary border-opacity-50 shadow-lg p-4 mb-4 d-none">
+        <div class="d-flex align-items-center justify-content-between mb-3">
+            <h5 class="text-white font-outfit fw-bold mb-0">
+                <i class="bi bi-clipboard2-data text-secondary me-2"></i>Multi-Algorithm Empirical Benchmark Results
+            </h5>
+            <span class="badge bg-dark border border-secondary text-secondary-light">Measured on Host Hardware</span>
+        </div>
+        <p class="text-secondary-light small mb-3">
+            Each compatible lossless algorithm was independently executed against the uploaded file to measure actual space reduction, processing latency, and throughput.
+        </p>
+        <div class="table-responsive">
+            <table class="table table-dark table-hover table-bordered border-secondary mb-0 text-center" id="benchmarkTable">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Algorithm</th>
+                        <th>Compressed Size</th>
+                        <th>Space Saved</th>
+                        <th>Savings %</th>
+                        <th>Duration (s)</th>
+                        <th>Throughput (MB/s)</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="benchmarkTableBody">
+                    <!-- Populated via JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- COMPRESSION OUTCOME SECTION (Displayed if compressed) -->
+    {% if compressed_record %}
+    <div class="card glass-card border-secondary border-opacity-50 shadow-2xl p-4 mb-4 animate-fade-in" id="compressionResultCard">
+        <div class="d-flex flex-wrap align-items-center justify-content-between border-bottom border-secondary border-opacity-25 pb-3 mb-4">
+            <div class="d-flex align-items-center gap-2">
+                <span class="badge bg-dark border border-secondary text-white p-2 rounded-circle"><i class="bi bi-check2 fs-5"></i></span>
+                <div>
+                    <h4 class="text-white font-outfit fw-bold mb-0">Compression Succeeded (Lossless Verified)</h4>
+                    <small class="text-secondary-light">Algorithm Applied: <strong class="text-white">{{ compressed_record.selected_algorithm }}</strong> &bull; Container: {{ compressed_record.output_filename }}</small>
+                </div>
+            </div>
+            <div class="d-flex gap-2 mt-2 mt-md-0">
+                <a href="{{ url_for('download_compressed', operation_id=operation_id) }}" class="btn btn-royal-blue fw-bold px-3 py-2 shadow-sm">
+                    <i class="bi bi-download me-1"></i> Download File
+                </a>
+                <a href="{{ url_for('download_report', operation_id=operation_id) }}" class="btn btn-outline-secondary text-white fw-bold px-3 py-2 shadow-sm">
+                    <i class="bi bi-file-earmark-pdf me-1"></i> Download PDF Report
+                </a>
+            </div>
+        </div>
+
+        <!-- Metrics Grid -->
+        <div class="row g-3 mb-4 text-center">
+            <div class="col-6 col-md-2">
+                <div class="p-3 bg-dark rounded border border-secondary border-opacity-50 h-100">
+                    <div class="text-subtle small fw-semibold text-uppercase mb-1">Original Size</div>
+                    <div class="fw-bold text-white fs-6">{{ "{:,}".format(compressed_record.original_size) }} B</div>
+                    <small class="text-secondary-light">{{ (compressed_record.original_size / 1024)|round(2) }} KB</small>
+                </div>
+            </div>
+            <div class="col-6 col-md-2">
+                <div class="p-3 bg-dark rounded border border-secondary border-opacity-50 h-100">
+                    <div class="text-subtle small fw-semibold text-uppercase mb-1">Compressed Size</div>
+                    <div class="fw-bold text-white fs-6">{{ "{:,}".format(compressed_record.compressed_size) }} B</div>
+                    <small class="text-secondary-light">{{ (compressed_record.compressed_size / 1024)|round(2) }} KB</small>
+                </div>
+            </div>
+            <div class="col-6 col-md-2">
+                <div class="p-3 bg-dark rounded border border-secondary border-opacity-50 h-100">
+                    <div class="text-subtle small fw-semibold text-uppercase mb-1">Space Saved</div>
+                    <div class="fw-bold text-white fs-6">
+                        {{ "{:,}".format(compressed_record.bytes_saved) }} B
+                    </div>
+                    <small class="text-secondary-light">Delta bytes</small>
+                </div>
+            </div>
+            <div class="col-6 col-md-2">
+                <div class="p-3 bg-dark rounded border border-secondary border-opacity-50 h-100">
+                    <div class="text-subtle small fw-semibold text-uppercase mb-1">Space Savings %</div>
+                    {% set saving_pct = ((compressed_record.original_size - compressed_record.compressed_size) / compressed_record.original_size * 100)|round(2) if compressed_record.original_size > 0 else 0.0 %}
+                    <div class="display-6 fw-bold text-white">
+                        {{ saving_pct }}%
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-2">
+                <div class="p-3 bg-dark rounded border border-secondary border-opacity-50 h-100">
+                    <div class="text-subtle small fw-semibold text-uppercase mb-1">Compression Ratio</div>
+                    <div class="fw-bold text-white fs-5">{{ compressed_record.compression_ratio }}</div>
+                    <small class="text-secondary-light">C / O Ratio</small>
+                </div>
+            </div>
+            <div class="col-6 col-md-2">
+                <div class="p-3 bg-dark rounded border border-secondary border-opacity-50 h-100">
+                    <div class="text-subtle small fw-semibold text-uppercase mb-1">Duration</div>
+                    <div class="fw-bold text-white fs-5">{{ compressed_record.compression_duration }}s</div>
+                    <small class="text-secondary-light">Execution time</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chart Row: Original vs Compressed Visualization -->
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <div class="p-3 bg-dark rounded border border-secondary border-opacity-40">
+                    <h6 class="text-white fw-semibold mb-3"><i class="bi bi-bar-chart text-secondary me-2"></i>Storage Footprint Comparison</h6>
+                    <div style="height: 220px; position: relative;">
+                        <canvas id="sizeComparisonChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="p-4 bg-dark bg-opacity-75 rounded border border-secondary border-opacity-40 text-center">
+                    <i class="bi bi-cloud-arrow-down text-secondary fs-1 mb-2"></i>
+                    <h5 class="text-white fw-bold mb-2">Ready for Retrieval</h5>
+                    <p class="text-secondary-light small mb-3">
+                        The compressed payload has been safely written and logged to the SQLite history ledger. You can inspect it anytime from the History Log.
+                    </p>
+                    <div class="d-flex flex-column gap-2">
+                        <a href="{{ url_for('download_compressed', operation_id=operation_id) }}" class="btn btn-royal-blue fw-bold">
+                            <i class="bi bi-download me-1"></i> Download Compressed Archive
+                        </a>
+                        <a href="{{ url_for('download_report', operation_id=operation_id) }}" class="btn btn-outline-secondary text-white">
+                            <i class="bi bi-file-earmark-pdf me-1"></i> Download Full Technical PDF Report
+                        </a>
+                        <a href="{{ url_for('index') }}" class="btn btn-outline-secondary text-secondary-light btn-sm mt-2">
+                            <i class="bi bi-arrow-repeat me-1"></i> Compress Another File
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Footer Actions -->
+    <div class="d-flex justify-content-between align-items-center mt-3">
+        <a href="{{ url_for('index') }}" class="btn btn-outline-secondary text-white btn-sm">
+            <i class="bi bi-arrow-left me-1"></i> Analyze Another File
+        </a>
+        <a href="{{ url_for('history') }}" class="btn btn-outline-secondary text-white btn-sm">
+            <i class="bi bi-clock-history me-1"></i> View Compression History
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% if compressed_record %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const ctx = document.getElementById('sizeComparisonChart').getContext('2d');
+        const origSize = {{ compressed_record.original_size }};
+        const compSize = {{ compressed_record.compressed_size }};
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Original File Size', 'Compressed File Size ({{ compressed_record.selected_algorithm }})'],
+                datasets: [{
+                    label: 'Size in Bytes',
+                    data: [origSize, compSize],
+                    backgroundColor: [
+                        'rgba(59, 130, 246, 0.8)',
+                        'rgba(16, 185, 129, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgb(59, 130, 246)',
+                        'rgb(16, 185, 129)'
+                    ],
+                    borderWidth: 1,
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const val = context.raw;
+                                const kb = (val / 1024).toFixed(2);
+                                return `${val.toLocaleString()} Bytes (${kb} KB)`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#e2e8f0', font: { weight: 'bold' } }
+                    }
+                }
+            }
+        });
+    });
+</script>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,236 @@
+{% extends "base.html" %}
+
+{% block title %}Compression History Log - SmartCompress AI{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Page Header & Export -->
+    <div class="d-flex flex-wrap align-items-center justify-content-between mb-4">
+        <div>
+            <h2 class="font-outfit text-white fw-bold mb-1">
+                <i class="bi bi-clock-history text-secondary me-2"></i>Persistent Compression Ledger
+            </h2>
+            <p class="text-secondary-light mb-0">Audit history of all executed compression and storage operations stored in SQLite.</p>
+        </div>
+        <div class="mt-2 mt-md-0">
+            <a href="{{ url_for('export_history') }}" class="btn btn-outline-secondary text-white fw-bold">
+                <i class="bi bi-file-earmark-spreadsheet me-1"></i> Export Entire Ledger to CSV
+            </a>
+            <a href="{{ url_for('index') }}" class="btn btn-royal-blue ms-2 fw-bold">
+                <i class="bi bi-plus-circle me-1"></i> New Compression
+            </a>
+        </div>
+    </div>
+
+    <!-- Search & Filter Controls Card -->
+    <div class="card glass-card p-3 border-secondary border-opacity-50 shadow-sm mb-4">
+        <form action="{{ url_for('history') }}" method="GET" class="row g-2 align-items-center">
+            <!-- Search Input -->
+            <div class="col-md-4">
+                <div class="input-group">
+                    <span class="input-group-text bg-dark border-secondary text-muted"><i class="bi bi-search"></i></span>
+                    <input type="text" name="search" class="form-control bg-dark text-white border-secondary" 
+                           placeholder="Search filename or Op ID..." value="{{ search }}">
+                </div>
+            </div>
+
+            <!-- Algorithm Filter Dropdown -->
+            <div class="col-md-3">
+                <select name="algorithm" class="form-select bg-dark text-white border-secondary">
+                    <option value="ALL" {% if algorithm == 'ALL' %}selected{% endif %}>All Algorithms</option>
+                    {% for algo in supported_algorithms %}
+                    <option value="{{ algo }}" {% if algorithm == algo %}selected{% endif %}>{{ algo }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Sorting Dropdown -->
+            <div class="col-md-3">
+                <select name="sort_by" class="form-select bg-dark text-white border-secondary">
+                    <option value="date_desc" {% if sort_by == 'date_desc' %}selected{% endif %}>Newest First (Date &darr;)</option>
+                    <option value="date_asc" {% if sort_by == 'date_asc' %}selected{% endif %}>Oldest First (Date &uarr;)</option>
+                    <option value="savings_desc" {% if sort_by == 'savings_desc' %}selected{% endif %}>Largest Savings (&darr;)</option>
+                    <option value="savings_asc" {% if sort_by == 'savings_asc' %}selected{% endif %}>Smallest Savings (&uarr;)</option>
+                    <option value="size_desc" {% if sort_by == 'size_desc' %}selected{% endif %}>Original File Size (&darr;)</option>
+                </select>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="col-md-2 d-flex gap-2">
+                <button type="submit" class="btn btn-royal-blue flex-grow-1 fw-semibold">Apply</button>
+                {% if search or algorithm != 'ALL' or sort_by != 'date_desc' %}
+                <a href="{{ url_for('history') }}" class="btn btn-outline-secondary text-white" title="Reset Filters"><i class="bi bi-x-lg"></i></a>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+
+    {% if total_count == 0 %}
+    <!-- Empty State -->
+    <div class="card glass-card p-5 text-center my-4 border-secondary border-opacity-25 shadow-lg">
+        <div class="mb-3">
+            <i class="bi bi-inbox display-1 text-muted"></i>
+        </div>
+        <h4 class="text-white font-outfit fw-bold mb-2">No Matching Records Found</h4>
+        <p class="text-secondary-light max-w-500 mx-auto mb-4">
+            {% if search or algorithm != 'ALL' %}
+            No records matched your search or filter criteria. Try adjusting the query parameters.
+            {% else %}
+            No file compression operations have been executed yet.
+            {% endif %}
+        </p>
+        <div>
+            {% if search or algorithm != 'ALL' %}
+            <a href="{{ url_for('history') }}" class="btn btn-outline-light px-4 py-2 me-2">Clear Filters</a>
+            {% endif %}
+            <a href="{{ url_for('index') }}" class="btn btn-primary-gradient px-4 py-2 fw-bold">Compress a File</a>
+        </div>
+    </div>
+    {% else %}
+
+    <!-- History Table -->
+    <div class="card glass-card border-secondary border-opacity-25 shadow-lg mb-4">
+        <div class="table-responsive">
+            <table class="table table-dark table-hover table-bordered border-secondary mb-0 align-middle">
+                <thead class="table-secondary text-dark">
+                    <tr>
+                        <th style="width: 50px;">#</th>
+                        <th>Timestamp</th>
+                        <th>Filename</th>
+                        <th>Category</th>
+                        <th>Entropy</th>
+                        <th>Original</th>
+                        <th>Compressed</th>
+                        <th>Savings %</th>
+                        <th>Algorithm</th>
+                        <th>Source</th>
+                        <th class="text-center" style="width: 170px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for r in records %}
+                    <tr>
+                        <td class="text-muted small">{{ r.id }}</td>
+                        <td class="small text-muted">{{ r.creation_timestamp }}</td>
+                        <td>
+                            <div class="fw-semibold text-white text-break">
+                                {% if r.file_category == 'Folder / Multi-File Archive' or r.file_extension == 'folder' %}
+                                <i class="bi bi-folder-fill text-warning me-1"></i>
+                                {% else %}
+                                <i class="bi bi-file-earmark-text text-primary me-1"></i>
+                                {% endif %}
+                                {{ r.original_filename }}
+                            </div>
+                            <small class="text-muted font-monospace">{{ r.operation_id[:8] }}</small>
+                        </td>
+                        <td><span class="badge bg-secondary-subtle text-light border border-secondary">{{ r.file_category }}</span></td>
+                        <td><span class="badge bg-dark border border-secondary">{{ r.entropy }}</span></td>
+                        <td class="small">{{ "{:,}".format(r.original_size) }} B</td>
+                        <td class="small text-info">{{ "{:,}".format(r.compressed_size) }} B</td>
+                        <td>
+                            <span class="fw-bold {% if r.space_saving_pct >= 0 %}text-success{% else %}text-danger{% endif %}">
+                                {{ r.space_saving_pct }}%
+                            </span>
+                        </td>
+                        <td><span class="badge bg-primary">{{ r.selected_algorithm }}</span></td>
+                        <td>
+                            <small class="{% if 'ML' in r.recommendation_source %}text-info{% else %}text-muted{% endif %}">
+                                {{ r.recommendation_source }}
+                            </small>
+                        </td>
+                        <td class="text-center">
+                            <div class="btn-group btn-group-sm">
+                                <a href="{{ url_for('result', operation_id=r.operation_id) }}" class="btn btn-outline-primary" title="View details & analysis">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a href="{{ url_for('download_compressed', operation_id=r.operation_id) }}" class="btn btn-outline-success" title="Download compressed archive">
+                                    <i class="bi bi-download"></i>
+                                </a>
+                                <a href="{{ url_for('download_report', operation_id=r.operation_id) }}" class="btn btn-outline-danger" title="Download PDF Report">
+                                    <i class="bi bi-file-earmark-pdf"></i>
+                                </a>
+                                <button type="button" class="btn btn-outline-secondary text-danger" title="Delete record" 
+                                        onclick="confirmDelete({{ r.id }}, '{{ r.original_filename }}')">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination Footer -->
+        <div class="card-footer bg-transparent border-secondary border-opacity-25 d-flex flex-wrap justify-content-between align-items-center p-3">
+            <div class="text-muted small">
+                Showing <b>{{ records|length }}</b> of <b>{{ total_count }}</b> total records &bull; Page <b>{{ page }}</b> of <b>{{ total_pages }}</b>
+            </div>
+            {% if total_pages > 1 %}
+            <nav aria-label="History pagination">
+                <ul class="pagination pagination-sm mb-0">
+                    <li class="page-item {% if not has_prev %}disabled{% endif %}">
+                        <a class="page-link bg-dark text-white border-secondary" 
+                           href="{{ url_for('history', page=page-1, search=search, algorithm=algorithm, sort_by=sort_by) }}">
+                            &laquo; Prev
+                        </a>
+                    </li>
+                    {% for p in range(1, total_pages + 1) %}
+                        {% if p == page or (p >= page - 2 and p <= page + 2) %}
+                        <li class="page-item {% if p == page %}active{% endif %}">
+                            <a class="page-link {% if p == page %}bg-primary border-primary{% else %}bg-dark text-white border-secondary{% endif %}" 
+                               href="{{ url_for('history', page=p, search=search, algorithm=algorithm, sort_by=sort_by) }}">
+                                {{ p }}
+                            </a>
+                        </li>
+                        {% endif %}
+                    {% endfor %}
+                    <li class="page-item {% if not has_next %}disabled{% endif %}">
+                        <a class="page-link bg-dark text-white border-secondary" 
+                           href="{{ url_for('history', page=page+1, search=search, algorithm=algorithm, sort_by=sort_by) }}">
+                            Next &raquo;
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-slate-900 text-white border border-secondary">
+            <div class="modal-header border-bottom border-secondary border-opacity-25">
+                <h5 class="modal-title font-outfit text-danger" id="deleteModalLabel">
+                    <i class="bi bi-trash3-fill me-2"></i>Confirm Deletion
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to permanently delete history record <strong id="deleteRecordName" class="text-info"></strong>?</p>
+                <small class="text-muted">This will remove the entry from SQLite database tracking. The operation cannot be undone.</small>
+            </div>
+            <div class="modal-footer border-top border-secondary border-opacity-25">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+                <form id="deleteForm" method="POST" action="">
+                    <button type="submit" class="btn btn-danger btn-sm px-3">Delete Permanently</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function confirmDelete(recordId, filename) {
+        document.getElementById('deleteRecordName').textContent = `#${recordId} (${filename})`;
+        document.getElementById('deleteForm').action = `/history/delete/${recordId}`;
+        const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+        deleteModal.show();
+    }
+</script>
+{% endblock %}

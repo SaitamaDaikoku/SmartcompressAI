@@ -1,0 +1,349 @@
+{% extends "base.html" %}
+
+{% block title %}SmartCompress AI - Intelligent File Compression & Algorithm Chooser{% endblock %}
+
+{% block content %}
+<div class="hero-section py-5 position-relative overflow-hidden">
+    <div class="container py-2">
+        <!-- Hero Title & Tagline -->
+        <div class="text-center max-w-750 mx-auto mb-4">
+            <span class="badge bg-dark text-white border border-secondary px-3 py-2 rounded-pill mb-3 fw-medium">
+                <i class="bi bi-shield-check me-1 text-secondary"></i> Information Storage Management (ISM) Academic Suite
+            </span>
+            <h1 class="display-4 fw-bold font-outfit text-white mb-3">
+                Intelligent Storage Optimization Powered by <span class="text-gradient">Information Theory</span>
+            </h1>
+            <p class="lead text-secondary-light">
+                Analyze data entropy, benchmark and choose between <strong>PDF-Deflate, 7Z, ZIP, GZIP, BZIP2, and LZMA</strong> with empirical metrics and ML to achieve maximum lossless storage reduction.
+            </p>
+        </div>
+
+        <!-- Mode Switcher Tabs: Deep Analytics vs Visual Studio -->
+        <div class="d-flex justify-content-center mb-4">
+            <ul class="nav nav-pills p-1 rounded-pill border border-secondary shadow-lg" id="modeTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active px-4 py-2 rounded-pill fw-semibold text-white d-flex align-items-center gap-2" id="analytics-tab" data-bs-toggle="pill" data-bs-target="#analyticsMode" type="button" role="tab" aria-selected="true">
+                        <i class="bi bi-graph-up text-secondary"></i>
+                        <span>Analytics &amp; Algorithm Chooser</span>
+                        <span class="badge bg-dark text-secondary border border-secondary ms-1">All Engines</span>
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link px-4 py-2 rounded-pill fw-semibold text-white d-flex align-items-center gap-2" id="studio-tab" data-bs-toggle="pill" data-bs-target="#studioMode" type="button" role="tab" aria-selected="false">
+                        <i class="bi bi-grid-fill text-secondary"></i>
+                        <span>Visual Batch Studio</span>
+                        <span class="badge bg-dark text-secondary border border-secondary ms-1">Cards &bull; Sliders</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Tab Content Panes -->
+        <div class="tab-content" id="modeTabsContent">
+
+            <!-- ============================================================ -->
+            <!-- TAB 1: INTELLIGENT ANALYTICS & ALGORITHM CHOOSER (PRIMARY) -->
+            <!-- ============================================================ -->
+            <div class="tab-pane fade show active" id="analyticsMode" role="tabpanel" aria-labelledby="analytics-tab">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-xl-10">
+                        <div class="card bg-dark border-secondary shadow-2xl rounded-4 p-4 p-md-5 mb-5">
+                            
+                            <div class="text-center mb-4">
+                                <h3 class="text-white font-outfit fw-bold mb-2">
+                                    <i class="bi bi-cpu text-white me-2"></i>Analyze Entropy &amp; Compare Algorithms
+                                </h3>
+                                <p class="text-secondary-light max-w-600 mx-auto">
+                                    Upload any file or folder to calculate real Shannon Entropy, inspect Random Forest ML predictions, and directly benchmark or choose between <strong>PDF-Deflate, 7-Zip (7Z), ZIP, GZIP, BZIP2, and LZMA</strong>.
+                                </p>
+                            </div>
+
+                            <!-- Algorithm Selector Quick-Badges Bar -->
+                            <div class="p-3 bg-black bg-opacity-60 rounded-3 border border-secondary border-opacity-40 mb-4">
+                                <div class="small fw-semibold text-white mb-2 text-center text-md-start">
+                                    <i class="bi bi-layers text-secondary me-1"></i> Available Lossless Compression Engines:
+                                </div>
+                                <div class="d-flex flex-wrap justify-content-center justify-content-md-start gap-2">
+                                    <span class="badge bg-dark border border-secondary text-white px-3 py-2">
+                                        <i class="bi bi-file-earmark-pdf me-1"></i> <strong>PDF-Deflate</strong>: Stream &amp; raster reduction (up to 50%+)
+                                    </span>
+                                    <span class="badge bg-dark border border-secondary text-white px-3 py-2">
+                                        <i class="bi bi-archive me-1"></i> <strong>7Z (LZMA2)</strong>: Highest ratio, solid blocks
+                                    </span>
+                                    <span class="badge bg-dark border border-secondary text-white px-3 py-2">
+                                        <i class="bi bi-file-earmark-zip me-1"></i> <strong>ZIP</strong>: Universal OS compatibility
+                                    </span>
+                                    <span class="badge bg-dark border border-secondary text-secondary-light px-3 py-2">
+                                        <strong>GZIP</strong>: Fast stream deflate
+                                    </span>
+                                    <span class="badge bg-dark border border-secondary text-secondary-light px-3 py-2">
+                                        <strong>BZIP2</strong>: Burrows-Wheeler transform
+                                    </span>
+                                    <span class="badge bg-dark border border-secondary text-secondary-light px-3 py-2">
+                                        <strong>LZMA</strong>: Lempel-Ziv-Markov chain
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Upload Form directly to /analyze -->
+                            <form action="{{ url_for('analyze') }}" method="POST" enctype="multipart/form-data" id="analyticsForm">
+                                <input type="hidden" name="upload_mode" id="analyticsUploadMode" value="file">
+                                <input type="hidden" name="relative_paths" id="analyticsRelativePaths" value="[]">
+                                <input type="hidden" name="folder_name" id="analyticsFolderName" value="">
+
+                                <!-- Dropzone Box -->
+                                <div class="drop-zone p-5 text-center rounded-4 border-2 border-dashed border-secondary mb-4 cursor-pointer" id="analyticsDropzone">
+                                    <div class="mb-3">
+                                        <i class="bi bi-cloud-arrow-up display-3 text-secondary"></i>
+                                    </div>
+                                    <h4 class="text-white font-outfit fw-bold mb-2" id="analyticsDropzoneTitle">
+                                        Drag &amp; Drop file or folder here
+                                    </h4>
+                                    <p class="text-secondary-light mb-4" id="analyticsDropzoneSubtitle">
+                                        Supports PDF, code, documents, media, archives, and directories up to {{ max_file_size_mb }} MB
+                                    </p>
+
+                                    <!-- Selected File Preview Badge -->
+                                    <div id="analyticsSelectedDisplay" class="d-none mb-3">
+                                        <div class="badge bg-dark border border-secondary text-white fs-6 p-3 rounded-3 shadow">
+                                            <i class="bi bi-file-earmark-check me-2 text-secondary"></i>
+                                            <span id="analyticsSelectedName">file.txt</span>
+                                            <span class="ms-2 opacity-75" id="analyticsSelectedSize">(0 KB)</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-wrap justify-content-center gap-3">
+                                        <button type="button" class="btn btn-royal-blue px-4 py-2 rounded-3 fw-semibold shadow-sm" id="analyticsPickFileBtn">
+                                            <i class="bi bi-file-earmark-plus me-1"></i> Choose File
+                                        </button>
+                                        <button type="button" class="btn btn-outline-secondary px-4 py-2 rounded-3 fw-semibold text-white" id="analyticsPickFolderBtn">
+                                            <i class="bi bi-folder-plus me-1"></i> Choose Entire Folder
+                                        </button>
+                                    </div>
+
+                                    <!-- Hidden native inputs -->
+                                    <input type="file" name="file" id="analyticsFileInput" class="d-none">
+                                    <input type="file" name="folder_files" id="analyticsFolderInput" webkitdirectory directory mozdirectory multiple class="d-none">
+                                </div>
+
+                                <!-- Optimization Preference Selector -->
+                                <div class="row align-items-center g-3 mb-4">
+                                    <div class="col-md-4">
+                                        <label class="form-label text-white fw-semibold small mb-1">
+                                            Optimization Strategy:
+                                        </label>
+                                        <select name="preference" class="form-select bg-dark text-white border-secondary">
+                                            <option value="balanced" selected>Balanced (Optimal Space &amp; Speed)</option>
+                                            <option value="max_compression">Maximum Compression (Prioritize 7Z / PDF-Deflate)</option>
+                                            <option value="fastest">Fastest Processing (Prioritize ZIP / GZIP)</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-8 text-md-end pt-md-4">
+                                        <button type="submit" class="btn btn-primary-gradient px-5 py-3 fw-bold fs-6 rounded-3 shadow-lg w-100 w-md-auto" id="analyticsSubmitBtn" disabled>
+                                            <i class="bi bi-speedometer2 me-2"></i> Analyze &amp; Open Algorithm Chooser
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <!-- Quick Lookup for Previous Session ID -->
+                            <div class="border-top border-secondary border-opacity-25 pt-3 d-flex flex-wrap align-items-center justify-content-between gap-3">
+                                <span class="small text-secondary-light">
+                                    <i class="bi bi-clock-history me-1"></i> Reopen a previous analysis or test:
+                                </span>
+                                <div class="d-flex align-items-center gap-2">
+                                    <input type="text" id="lookupOpIdInput" class="form-control form-control-sm bg-dark text-white border-secondary" placeholder="Enter Operation ID..." style="max-width: 220px;">
+                                    <button type="button" class="btn btn-outline-secondary btn-sm px-3 fw-semibold text-white" id="lookupOpIdBtn">
+                                        <i class="bi bi-box-arrow-in-right me-1"></i> Open Analytics
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- TAB 2: VISUAL BATCH STUDIO (CARDS & SLIDER WORKSPACE) -->
+            <!-- ============================================================ -->
+            <div class="tab-pane fade" id="studioMode" role="tabpanel" aria-labelledby="studio-tab">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-xl-11">
+                        <div class="card bg-dark border-secondary shadow-2xl rounded-4 overflow-hidden mb-5">
+                            
+                            <!-- Top Control Bar (With PDF-Deflate and algorithms explicitly selectable) -->
+                            <div class="studio-topbar d-flex flex-wrap align-items-center justify-content-between gap-3">
+                                <div class="d-flex flex-wrap align-items-center gap-3">
+                                    <!-- Compression Level -->
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="text-white fw-semibold d-flex align-items-center">
+                                            Compression Level
+                                            <i class="bi bi-info-circle text-secondary ms-2 cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" 
+                                               title="Adjust aggressiveness: higher levels optimize content streams, clean garbage objects, and deeply compress embedded images."></i>
+                                        </span>
+                                        <input type="range" class="compression-range" id="compressionLevelSlider" min="10" max="100" step="5" value="100">
+                                        <span class="badge bg-dark border border-secondary px-3 py-2 text-white fw-bold fs-6">
+                                            <span id="levelValueDisplay">100</span> %
+                                        </span>
+                                    </div>
+
+                                    <!-- Global Algorithm Selector -->
+                                    <div class="d-flex align-items-center gap-2 border-start border-secondary border-opacity-50 ps-3">
+                                        <span class="text-white fw-semibold small">Algorithm:</span>
+                                        <select id="studioGlobalAlgorithm" class="form-select form-select-sm bg-dark text-white border-secondary" style="min-width: 260px;">
+                                            <option value="AUTO" selected>Auto (Smart AI Recommendation)</option>
+                                            <option value="PDF-Deflate">PDF-Deflate / Stream Optimization</option>
+                                            <option value="7Z">7Z (Highest Compression - LZMA2)</option>
+                                            <option value="ZIP">ZIP (Universal Compatibility)</option>
+                                            <option value="GZIP">GZIP (Fast Streaming)</option>
+                                            <option value="BZIP2">BZIP2 (Burrows-Wheeler)</option>
+                                            <option value="LZMA">LZMA (High Ratio)</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex align-items-center gap-2">
+                                    <button type="button" class="btn btn-royal-blue px-4 py-2 rounded-3 shadow-sm d-flex align-items-center" id="compressAllBtn" disabled>
+                                        <span class="spinner-border spinner-border-sm me-2 d-none" id="compressAllSpinner"></span>
+                                        <i class="bi bi-play-circle-fill me-2" id="compressAllIcon"></i> Compress
+                                    </button>
+                                    <button type="button" class="btn btn-outline-secondary px-3 py-2 rounded-3 text-secondary-light" id="deleteAllTopBtn" title="Clear all queued files">
+                                        Delete All
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Algorithm Information Sub-bar: Explicitly mention possible algorithms & roles -->
+                            <div class="px-4 py-2 bg-black bg-opacity-70 border-bottom border-secondary border-opacity-40 d-flex flex-wrap align-items-center justify-content-between gap-2 small text-secondary">
+                                <div>
+                                    <span class="text-white fw-medium me-2"><i class="bi bi-hdd-network text-secondary me-1"></i>Supported Engines:</span>
+                                    <span class="text-white">PDF-Deflate</span> (FlateDecode/XRef/Raster), 
+                                    <span class="text-white">7Z</span> (LZMA2 Solid), 
+                                    <span class="text-white">ZIP</span> (Deflate), 
+                                    <span class="text-white">GZIP</span>, 
+                                    <span class="text-white">BZIP2</span>, 
+                                    <span class="text-white">LZMA</span>
+                                </div>
+                                <div class="text-secondary-light">
+                                    <i class="bi bi-lightning-charge text-secondary me-1"></i>Choose <strong>PDF-Deflate</strong> for direct 50%+ reduction on PDF streams &amp; images
+                                </div>
+                            </div>
+
+                            <!-- Main Canvas: Dropzone (if empty) or Card Deck (when files queued) -->
+                            <div class="position-relative p-4 p-md-5 bg-black bg-opacity-40 min-h-400 d-flex flex-column justify-content-center align-items-center" id="studioCanvas">
+                                
+                                <!-- Empty State Dropzone -->
+                                <div class="text-center p-5 w-100" id="emptyStateContainer">
+                                    <div class="mb-3">
+                                        <i class="bi bi-cloud-arrow-up display-3 text-secondary"></i>
+                                    </div>
+                                    <h4 class="text-white font-outfit fw-bold mb-2">Drag and drop your PDF or files here</h4>
+                                    <p class="text-secondary mb-4">or choose from your computer to preview documents and start compressing</p>
+                                    <div class="d-flex justify-content-center gap-3">
+                                        <button type="button" class="btn btn-royal-blue px-4 py-2 rounded-3 fw-semibold" id="emptySelectFilesBtn">
+                                            <i class="bi bi-file-earmark-pdf me-2"></i> Select PDF / Files
+                                        </button>
+                                        <button type="button" class="btn btn-outline-secondary px-4 py-2 rounded-3 fw-semibold text-white" id="emptySelectFolderBtn">
+                                            <i class="bi bi-folder me-2"></i> Select Folder
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Card Deck (Rendered dynamically when files added) -->
+                                <div class="studio-card-deck w-100 justify-content-start d-none" id="cardsDeck">
+                                    <!-- Cards inserted dynamically here via app.js -->
+
+                                    <!-- Add More Files Circular Button (Exact match to screenshot) -->
+                                    <div class="add-more-circle-btn" id="addMoreCircleBtn" title="Add more files or PDF documents">
+                                        <i class="bi bi-plus-circle fs-1 mb-2"></i>
+                                        <div class="small fw-semibold text-center line-height-sm">
+                                            Add More PDF<br>Files
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- Bottom Action Bar -->
+                            <div class="studio-bottombar d-flex flex-wrap align-items-center justify-content-between gap-3">
+                                <div class="d-flex align-items-center gap-2">
+                                    <button type="button" class="btn btn-outline-secondary px-3 py-2 fw-semibold rounded-3 text-white" id="bottomSelectFilesBtn">
+                                        <i class="bi bi-file-earmark-plus me-1"></i> Select PDF
+                                    </button>
+                                    <button type="button" class="btn btn-outline-secondary px-3 py-2 fw-semibold rounded-3" id="bottomSelectFolderBtn">
+                                        <i class="bi bi-folder-plus me-1"></i> Select Folder
+                                    </button>
+                                </div>
+
+                                <div class="d-flex align-items-center gap-2">
+                                    <button type="button" class="btn btn-outline-danger p-2 rounded-3" id="bottomTrashBtn" title="Delete All Files">
+                                        <i class="bi bi-trash3 fs-5"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-royal-blue px-4 py-2 fw-bold rounded-3 shadow-sm" id="downloadZipBtn" disabled>
+                                        <i class="bi bi-file-earmark-zip-fill me-1"></i> Download ZIP
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Hidden File Inputs -->
+                            <input type="file" id="batchFileInput" multiple accept=".pdf,.png,.jpg,.jpeg,.webp,.txt,.py,.csv,.json,.doc,.docx,.zip,.7z,*" class="d-none">
+                            <input type="file" id="batchFolderInput" webkitdirectory directory mozdirectory multiple class="d-none">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Information Architecture Highlights -->
+        <div class="row g-4 mt-4 pt-3">
+            <div class="col-md-3">
+                <div class="feature-card p-4 rounded-4 bg-dark border border-secondary border-opacity-50 h-100">
+                    <div class="feature-icon mb-3 text-white fs-3">
+                        <i class="bi bi-graph-up"></i>
+                    </div>
+                    <h5 class="text-white font-outfit fw-semibold mb-2">Shannon Entropy</h5>
+                    <p class="text-secondary-light small mb-0">
+                        Evaluates byte probability distribution $H(X) = -\sum p(x)\log_2 p(x)$ (0–8 bits/byte) to mathematically determine information randomness and compressibility.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="feature-card p-4 rounded-4 bg-dark border border-secondary border-opacity-50 h-100">
+                    <div class="feature-icon mb-3 text-white fs-3">
+                        <i class="bi bi-cpu"></i>
+                    </div>
+                    <h5 class="text-white font-outfit fw-semibold mb-2">Random Forest ML</h5>
+                    <p class="text-secondary-light small mb-0">
+                        Ensemble decision tree model trained on empirical multi-algorithm compression benchmarks to recommend the most optimal algorithm.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="feature-card p-4 rounded-4 bg-dark border border-secondary border-opacity-50 h-100">
+                    <div class="feature-icon mb-3 text-white fs-3">
+                        <i class="bi bi-layers"></i>
+                    </div>
+                    <h5 class="text-white font-outfit fw-semibold mb-2">Real Multi-Format Engine</h5>
+                    <p class="text-secondary-light small mb-0">
+                        Supports PDF-Deflate, 7Z (py7zr LZMA2), ZIP, GZIP, BZIP2, and LZMA with genuine byte compression and lossless verification.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="feature-card p-4 rounded-4 bg-dark border border-secondary border-opacity-50 h-100">
+                    <div class="feature-icon mb-3 text-white fs-3">
+                        <i class="bi bi-file-earmark-pdf"></i>
+                    </div>
+                    <h5 class="text-white font-outfit fw-semibold mb-2">Auditing &amp; Reports</h5>
+                    <p class="text-secondary-light small mb-0">
+                        Generates publication-ready PDF reports with ReportLab and maintains a searchable SQLite history of all storage operations.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

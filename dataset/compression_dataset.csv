@@ -1,0 +1,52 @@
+sample_name,file_size,file_size_kb,entropy,category,extension,preference,best_algorithm,measured_saving_pct,measured_duration
+server_access.log,130000,126.95,4.3282,Text / Document,.log,balanced,LZMA,99.83,0.0121
+server_access.log,130000,126.95,4.3282,Text / Document,.log,max_compression,LZMA,99.83,0.0121
+server_access.log,130000,126.95,4.3282,Text / Document,.log,fastest,GZIP,99.57,0.001
+sparse_memory.bin,266240,260.0,0.1454,Binary / Executable,.bin,balanced,BZIP2,99.98,0.002
+sparse_memory.bin,266240,260.0,0.1454,Binary / Executable,.bin,max_compression,BZIP2,99.98,0.002
+sparse_memory.bin,266240,260.0,0.1454,Binary / Executable,.bin,fastest,ZIP,99.84,0.0012
+dna_repeats.txt,120000,117.19,2.0,Text / Document,.txt,balanced,BZIP2,99.95,0.0095
+dna_repeats.txt,120000,117.19,2.0,Text / Document,.txt,max_compression,BZIP2,99.95,0.0095
+dna_repeats.txt,120000,117.19,2.0,Text / Document,.txt,fastest,ZIP,99.78,0.001
+algorithm_simulation.py,56800,55.47,4.5143,Structured Data / Code,.py,balanced,ZIP,98.64,0.0008
+algorithm_simulation.py,56800,55.47,4.5143,Structured Data / Code,.py,max_compression,LZMA,99.19,0.0139
+algorithm_simulation.py,56800,55.47,4.5143,Structured Data / Code,.py,fastest,ZIP,98.64,0.0008
+user_records.json,133542,130.41,4.5784,Structured Data / Code,.json,balanced,7Z,96.9,0.0439
+user_records.json,133542,130.41,4.5784,Structured Data / Code,.json,max_compression,7Z,96.9,0.0439
+user_records.json,133542,130.41,4.5784,Structured Data / Code,.json,fastest,ZIP,90.36,0.0019
+sensor_telemetry.csv,144047,140.67,4.1948,Structured Data / Code,.csv,balanced,LZMA,99.68,0.0241
+sensor_telemetry.csv,144047,140.67,4.1948,Structured Data / Code,.csv,max_compression,LZMA,99.68,0.0241
+sensor_telemetry.csv,144047,140.67,4.1948,Structured Data / Code,.csv,fastest,ZIP,98.97,0.0009
+ism_lecture_notes.md,67200,65.62,4.3933,Text / Document,.md,balanced,ZIP,98.76,0.0007
+ism_lecture_notes.md,67200,65.62,4.3933,Text / Document,.md,max_compression,LZMA,99.27,0.0138
+ism_lecture_notes.md,67200,65.62,4.3933,Text / Document,.md,fastest,ZIP,98.76,0.0007
+landing_page.html,41400,40.43,4.739,Structured Data / Code,.html,balanced,ZIP,98.87,0.001
+landing_page.html,41400,40.43,4.739,Structured Data / Code,.html,max_compression,LZMA,99.3,0.011
+landing_page.html,41400,40.43,4.739,Structured Data / Code,.html,fastest,ZIP,98.87,0.001
+database_backup.sql,290000,283.2,5.0608,Structured Data / Code,.sql,balanced,LZMA,99.9,0.0166
+database_backup.sql,290000,283.2,5.0608,Structured Data / Code,.sql,max_compression,LZMA,99.9,0.0166
+database_backup.sql,290000,283.2,5.0608,Structured Data / Code,.sql,fastest,ZIP,99.57,0.0012
+compiled_binary.exe,74536,72.79,7.8355,Binary / Executable,.exe,balanced,ZIP,11.64,0.0016
+compiled_binary.exe,74536,72.79,7.8355,Binary / Executable,.exe,max_compression,GZIP,11.77,0.0018
+compiled_binary.exe,74536,72.79,7.8355,Binary / Executable,.exe,fastest,ZIP,11.64,0.0016
+firmware.bin,33600,32.81,6.7629,Binary / Executable,.bin,balanced,ZIP,98.3,0.0006
+firmware.bin,33600,32.81,6.7629,Binary / Executable,.bin,max_compression,LZMA,98.77,0.0119
+firmware.bin,33600,32.81,6.7629,Binary / Executable,.bin,fastest,ZIP,98.3,0.0006
+encrypted_payload.dat,131072,128.0,7.9986,Binary / General Data,.dat,balanced,ZIP,-0.14,0.0035
+encrypted_payload.dat,131072,128.0,7.9986,Binary / General Data,.dat,max_compression,ZIP,-0.14,0.0035
+encrypted_payload.dat,131072,128.0,7.9986,Binary / General Data,.dat,fastest,GZIP,-0.06,0.0029
+compressed_archive.zip,81924,80.0,7.9978,Archive / Compressed,.zip,balanced,ZIP,-0.2,0.0022
+compressed_archive.zip,81924,80.0,7.9978,Archive / Compressed,.zip,max_compression,ZIP,-0.2,0.0022
+compressed_archive.zip,81924,80.0,7.9978,Archive / Compressed,.zip,fastest,GZIP,-0.08,0.002
+readme_snippet.txt,1475,1.44,4.2291,Text / Document,.txt,balanced,GZIP,92.47,0.0007
+readme_snippet.txt,1475,1.44,4.2291,Text / Document,.txt,max_compression,GZIP,92.47,0.0007
+readme_snippet.txt,1475,1.44,4.2291,Text / Document,.txt,fastest,ZIP,85.9,0.0005
+large_system_trace.log,1065000,1040.04,4.825,Text / Document,.log,balanced,LZMA,99.97,0.0327
+large_system_trace.log,1065000,1040.04,4.825,Text / Document,.log,max_compression,LZMA,99.97,0.0327
+large_system_trace.log,1065000,1040.04,4.825,Text / Document,.log,fastest,ZIP,99.64,0.003
+monolithic_module.js,536000,523.44,4.1847,Structured Data / Code,.js,balanced,LZMA,99.95,0.025
+monolithic_module.js,536000,523.44,4.1847,Structured Data / Code,.js,max_compression,BZIP2,99.96,0.0527
+monolithic_module.js,536000,523.44,4.1847,Structured Data / Code,.js,fastest,GZIP,99.64,0.0019
+financial_ledger.csv,840033,820.34,4.4399,Structured Data / Code,.csv,balanced,7Z,97.44,0.1606
+financial_ledger.csv,840033,820.34,4.4399,Structured Data / Code,.csv,max_compression,7Z,97.44,0.1606
+financial_ledger.csv,840033,820.34,4.4399,Structured Data / Code,.csv,fastest,GZIP,89.46,0.0138

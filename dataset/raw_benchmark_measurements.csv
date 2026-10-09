@@ -1,0 +1,86 @@
+file_name,file_size,entropy,category,extension,algorithm,compressed_size,space_saving_pct,duration
+server_access.log,130000,4.3282,Text / Document,.log,ZIP,658,99.49,0.0012
+server_access.log,130000,4.3282,Text / Document,.log,GZIP,562,99.57,0.001
+server_access.log,130000,4.3282,Text / Document,.log,BZIP2,235,99.82,0.0113
+server_access.log,130000,4.3282,Text / Document,.log,LZMA,216,99.83,0.0121
+server_access.log,130000,4.3282,Text / Document,.log,7Z,313,99.76,0.0168
+sparse_memory.bin,266240,0.1454,Binary / Executable,.bin,ZIP,420,99.84,0.0012
+sparse_memory.bin,266240,0.1454,Binary / Executable,.bin,GZIP,324,99.88,0.0013
+sparse_memory.bin,266240,0.1454,Binary / Executable,.bin,BZIP2,63,99.98,0.002
+sparse_memory.bin,266240,0.1454,Binary / Executable,.bin,LZMA,188,99.93,0.0158
+sparse_memory.bin,266240,0.1454,Binary / Executable,.bin,7Z,283,99.89,0.0196
+dna_repeats.txt,120000,2.0,Text / Document,.txt,ZIP,269,99.78,0.001
+dna_repeats.txt,120000,2.0,Text / Document,.txt,GZIP,175,99.85,0.001
+dna_repeats.txt,120000,2.0,Text / Document,.txt,BZIP2,54,99.95,0.0095
+dna_repeats.txt,120000,2.0,Text / Document,.txt,LZMA,156,99.87,0.0138
+dna_repeats.txt,120000,2.0,Text / Document,.txt,7Z,247,99.79,0.0179
+algorithm_simulation.py,56800,4.5143,Structured Data / Code,.py,ZIP,773,98.64,0.0008
+algorithm_simulation.py,56800,4.5143,Structured Data / Code,.py,GZIP,671,98.82,0.0015
+algorithm_simulation.py,56800,4.5143,Structured Data / Code,.py,BZIP2,685,98.79,0.0055
+algorithm_simulation.py,56800,4.5143,Structured Data / Code,.py,LZMA,460,99.19,0.0139
+algorithm_simulation.py,56800,4.5143,Structured Data / Code,.py,7Z,571,98.99,0.0195
+user_records.json,133542,4.5784,Structured Data / Code,.json,ZIP,12875,90.36,0.0019
+user_records.json,133542,4.5784,Structured Data / Code,.json,GZIP,12779,90.43,0.002
+user_records.json,133542,4.5784,Structured Data / Code,.json,BZIP2,7099,94.68,0.0075
+user_records.json,133542,4.5784,Structured Data / Code,.json,LZMA,4404,96.7,0.1096
+user_records.json,133542,4.5784,Structured Data / Code,.json,7Z,4142,96.9,0.0439
+sensor_telemetry.csv,144047,4.1948,Structured Data / Code,.csv,ZIP,1488,98.97,0.0009
+sensor_telemetry.csv,144047,4.1948,Structured Data / Code,.csv,GZIP,1389,99.04,0.0015
+sensor_telemetry.csv,144047,4.1948,Structured Data / Code,.csv,BZIP2,921,99.36,0.0205
+sensor_telemetry.csv,144047,4.1948,Structured Data / Code,.csv,LZMA,456,99.68,0.0241
+sensor_telemetry.csv,144047,4.1948,Structured Data / Code,.csv,7Z,559,99.61,0.028
+ism_lecture_notes.md,67200,4.3933,Text / Document,.md,ZIP,835,98.76,0.0007
+ism_lecture_notes.md,67200,4.3933,Text / Document,.md,GZIP,736,98.9,0.0009
+ism_lecture_notes.md,67200,4.3933,Text / Document,.md,BZIP2,874,98.7,0.0071
+ism_lecture_notes.md,67200,4.3933,Text / Document,.md,LZMA,492,99.27,0.0138
+ism_lecture_notes.md,67200,4.3933,Text / Document,.md,7Z,598,99.11,0.0268
+landing_page.html,41400,4.739,Structured Data / Code,.html,ZIP,469,98.87,0.001
+landing_page.html,41400,4.739,Structured Data / Code,.html,GZIP,373,99.1,0.001
+landing_page.html,41400,4.739,Structured Data / Code,.html,BZIP2,385,99.07,0.0045
+landing_page.html,41400,4.739,Structured Data / Code,.html,LZMA,288,99.3,0.011
+landing_page.html,41400,4.739,Structured Data / Code,.html,7Z,386,99.07,0.0161
+database_backup.sql,290000,5.0608,Structured Data / Code,.sql,ZIP,1255,99.57,0.0012
+database_backup.sql,290000,5.0608,Structured Data / Code,.sql,GZIP,1157,99.6,0.0014
+database_backup.sql,290000,5.0608,Structured Data / Code,.sql,BZIP2,395,99.86,0.027
+database_backup.sql,290000,5.0608,Structured Data / Code,.sql,LZMA,288,99.9,0.0166
+database_backup.sql,290000,5.0608,Structured Data / Code,.sql,7Z,386,99.87,0.02
+compiled_binary.exe,74536,7.8355,Binary / Executable,.exe,ZIP,65860,11.64,0.0016
+compiled_binary.exe,74536,7.8355,Binary / Executable,.exe,GZIP,65762,11.77,0.0018
+compiled_binary.exe,74536,7.8355,Binary / Executable,.exe,BZIP2,66255,11.11,0.0127
+compiled_binary.exe,74536,7.8355,Binary / Executable,.exe,LZMA,66564,10.7,0.0212
+compiled_binary.exe,74536,7.8355,Binary / Executable,.exe,7Z,66672,10.55,0.0272
+firmware.bin,33600,6.7629,Binary / Executable,.bin,ZIP,571,98.3,0.0006
+firmware.bin,33600,6.7629,Binary / Executable,.bin,GZIP,480,98.57,0.0009
+firmware.bin,33600,6.7629,Binary / Executable,.bin,BZIP2,834,97.52,0.004
+firmware.bin,33600,6.7629,Binary / Executable,.bin,LZMA,412,98.77,0.0119
+firmware.bin,33600,6.7629,Binary / Executable,.bin,7Z,504,98.5,0.0183
+encrypted_payload.dat,131072,7.9986,Binary / General Data,.dat,ZIP,131252,-0.14,0.0035
+encrypted_payload.dat,131072,7.9986,Binary / General Data,.dat,GZIP,131152,-0.06,0.0029
+encrypted_payload.dat,131072,7.9986,Binary / General Data,.dat,BZIP2,132073,-0.76,0.011
+encrypted_payload.dat,131072,7.9986,Binary / General Data,.dat,LZMA,131140,-0.05,0.0313
+encrypted_payload.dat,131072,7.9986,Binary / General Data,.dat,7Z,131242,-0.13,0.038
+compressed_archive.zip,81924,7.9978,Archive / Compressed,.zip,ZIP,82091,-0.2,0.0022
+compressed_archive.zip,81924,7.9978,Archive / Compressed,.zip,GZIP,81990,-0.08,0.002
+compressed_archive.zip,81924,7.9978,Archive / Compressed,.zip,BZIP2,82645,-0.88,0.0072
+compressed_archive.zip,81924,7.9978,Archive / Compressed,.zip,LZMA,81988,-0.08,0.0246
+compressed_archive.zip,81924,7.9978,Archive / Compressed,.zip,7Z,82099,-0.21,0.0306
+readme_snippet.txt,1475,4.2291,Text / Document,.txt,ZIP,208,85.9,0.0005
+readme_snippet.txt,1475,4.2291,Text / Document,.txt,GZIP,111,92.47,0.0007
+readme_snippet.txt,1475,4.2291,Text / Document,.txt,BZIP2,150,89.83,0.0009
+readme_snippet.txt,1475,4.2291,Text / Document,.txt,LZMA,140,90.51,0.0119
+readme_snippet.txt,1475,4.2291,Text / Document,.txt,7Z,228,84.54,0.0183
+large_system_trace.log,1065000,4.825,Text / Document,.log,ZIP,3848,99.64,0.003
+large_system_trace.log,1065000,4.825,Text / Document,.log,GZIP,3747,99.65,0.0035
+large_system_trace.log,1065000,4.825,Text / Document,.log,BZIP2,555,99.95,0.1302
+large_system_trace.log,1065000,4.825,Text / Document,.log,LZMA,356,99.97,0.0327
+large_system_trace.log,1065000,4.825,Text / Document,.log,7Z,464,99.96,0.0305
+monolithic_module.js,536000,4.1847,Structured Data / Code,.js,ZIP,2036,99.62,0.0055
+monolithic_module.js,536000,4.1847,Structured Data / Code,.js,GZIP,1937,99.64,0.0019
+monolithic_module.js,536000,4.1847,Structured Data / Code,.js,BZIP2,225,99.96,0.0527
+monolithic_module.js,536000,4.1847,Structured Data / Code,.js,LZMA,268,99.95,0.025
+monolithic_module.js,536000,4.1847,Structured Data / Code,.js,7Z,368,99.93,0.0261
+financial_ledger.csv,840033,4.4399,Structured Data / Code,.csv,ZIP,88650,89.45,0.014
+financial_ledger.csv,840033,4.4399,Structured Data / Code,.csv,GZIP,88551,89.46,0.0138
+financial_ledger.csv,840033,4.4399,Structured Data / Code,.csv,BZIP2,40644,95.16,0.0297
+financial_ledger.csv,840033,4.4399,Structured Data / Code,.csv,LZMA,22004,97.38,0.1783
+financial_ledger.csv,840033,4.4399,Structured Data / Code,.csv,7Z,21545,97.44,0.1606

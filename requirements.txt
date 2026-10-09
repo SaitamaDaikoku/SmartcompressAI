@@ -1,0 +1,32 @@
+# ==============================================================================
+# SmartCompress AI - Core Dependencies
+# Information Storage Management (ISM) Academic & Production System
+# ==============================================================================
+
+# Web Framework & HTTP Utilities
+Flask>=3.0.0
+Werkzeug>=3.0.0
+python-dotenv>=1.0.0
+
+# Data Science & Machine Learning Pipeline
+numpy>=1.24.0
+pandas>=2.0.0
+scikit-learn>=1.3.0
+joblib>=1.3.0
+
+# Compression & Archive Engines
+py7zr>=0.20.0
+
+# Document, PDF & Image Processing
+pymupdf>=1.23.0
+pypdf>=4.0.0
+Pillow>=10.0.0
+
+# Archival Auditing & PDF Report Generation
+reportlab>=4.0.0
+
+# Automated Testing Suite & Verification
+pytest>=7.4.0
+
+# Production WSGI Server (Linux/macOS container deployment)
+gunicorn>=21.2.0; platform_system != "Windows"

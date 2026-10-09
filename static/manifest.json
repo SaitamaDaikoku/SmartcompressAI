@@ -1,0 +1,21 @@
+{
+  "name": "SmartCompress AI - Intelligent File Compression Recommendation System",
+  "short_name": "SmartCompress AI",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b0f19",
+  "theme_color": "#0284c7",
+  "description": "Information Storage Management (ISM) Compression Recommendation Platform",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192' fill='%230284c7'><rect width='192' height='192' rx='36' fill='%230f172a'/><path d='M96 40 L140 100 L110 100 L110 145 L82 145 L82 100 L52 100 Z' fill='%2338bdf8'/></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' fill='%230284c7'><rect width='512' height='512' rx='96' fill='%230f172a'/><path d='M256 100 L380 270 L300 270 L300 400 L212 400 L212 270 L132 270 Z' fill='%2338bdf8'/></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}

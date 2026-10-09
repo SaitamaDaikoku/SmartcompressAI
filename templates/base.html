@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SmartCompress AI - Intelligent File Compression Recommendation System using Information Theory, Shannon Entropy, and Machine Learning.">
+    <meta name="theme-color" content="#1e293b">
+    <title>{% block title %}SmartCompress AI - Intelligent Storage Optimization{% endblock %}</title>
+
+    <!-- Google Fonts: Inter & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230284c7'><path d='M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z'/></svg>">
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- Navigation Header -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark-glass sticky-top py-3 border-bottom border-secondary border-opacity-25 shadow-sm">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="{{ url_for('index') }}">
+                <span class="brand-icon-wrapper">
+                    <i class="bi bi-cpu text-white"></i>
+                </span>
+                <span class="brand-title">SmartCompress <span class="badge bg-dark border border-secondary text-white ms-1">PRO</span></span>
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="bi bi-list fs-2 text-light"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarMain">
+                <ul class="navbar-nav ms-auto align-items-lg-center gap-2">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'index' %}active{% endif %}" href="{{ url_for('index') }}">
+                            <i class="bi bi-cloud-arrow-up me-1"></i> Compress & Analyze
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'dashboard' %}active{% endif %}" href="{{ url_for('dashboard') }}">
+                            <i class="bi bi-pie-chart me-1"></i> Storage Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'history' %}active{% endif %}" href="{{ url_for('history') }}">
+                            <i class="bi bi-clock-history me-1"></i> History Log
+                        </a>
+                    </li>
+                    <li class="nav-item ms-lg-2">
+                        <a class="btn btn-outline-secondary btn-sm rounded-pill px-3 text-white" href="#" data-bs-toggle="modal" data-bs-target="#aboutModal">
+                            <i class="bi bi-info-circle me-1"></i> ISM Project
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Flash Messages Container -->
+    <div class="container mt-3">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show shadow-sm border-0 d-flex align-items-center gap-2" role="alert">
+                        <i class="bi {% if category == 'success' %}bi-check-circle-fill{% elif category == 'danger' %}bi-exclamation-triangle-fill{% else %}bi-info-circle-fill{% endif %} fs-5"></i>
+                        <div>{{ message }}</div>
+                        <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- Main Content Body -->
+    <main class="flex-grow-1">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- ISM Academic Project Info Modal -->
+    <div class="modal fade" id="aboutModal" tabindex="-1" aria-labelledby="aboutModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content bg-dark text-light border border-secondary">
+                <div class="modal-header border-bottom border-secondary border-opacity-40">
+                    <h5 class="modal-title font-outfit text-white" id="aboutModalLabel">
+                        <i class="bi bi-mortarboard text-secondary me-2"></i>About SmartCompress AI
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="badge bg-dark border border-secondary text-white mb-3 px-3 py-2 fs-6">Information Storage Management (ISM) Project</div>
+                    <p class="text-secondary-light">
+                        <strong>SmartCompress AI</strong> is an end-to-end storage optimization platform designed to solve the critical trade-off between 
+                        compression ratio, processor latency, and data fidelity in enterprise storage tiers.
+                    </p>
+                    <div class="row g-3 my-2">
+                        <div class="col-md-4">
+                            <div class="p-3 bg-dark rounded border border-secondary border-opacity-50 h-100">
+                                <h6 class="text-white"><i class="bi bi-activity text-secondary me-1"></i> Shannon Entropy</h6>
+                                <small class="text-secondary-light">Calculates byte-level entropy $H(X) = -\sum p(x)\log_2 p(x)$ to mathematically establish compressibility limits.</small>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="p-3 bg-dark rounded border border-secondary border-opacity-50 h-100">
+                                <h6 class="text-white"><i class="bi bi-cpu text-secondary me-1"></i> Random Forest ML</h6>
+                                <small class="text-secondary-light">Trained on empirical measured benchmark data across lossless algorithms to recommend optimal strategies.</small>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="p-3 bg-dark rounded border border-secondary border-opacity-50 h-100">
+                                <h6 class="text-white"><i class="bi bi-layers text-secondary me-1"></i> Real Engines</h6>
+                                <small class="text-secondary-light">Actual execution using PDF-Deflate, 7Z, ZIP, GZIP, BZIP2, and LZMA with verified bit-for-bit integrity.</small>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="small text-secondary-light mt-3 mb-0">
+                        Compatible with standard enterprise storage management paradigms: SAN, NAS, object stores, and archival tiers.
+                    </p>
+                </div>
+                <div class="modal-footer border-top border-secondary border-opacity-40">
+                    <button type="button" class="btn btn-outline-secondary text-white btn-sm px-4" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Footer -->
+    <footer class="footer mt-auto py-4 bg-dark-glass border-top border-secondary border-opacity-25 text-center text-muted">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-md-start mb-2 mb-md-0">
+                    <span class="font-outfit text-white fw-semibold">SmartCompress AI</span>
+                    <span class="mx-2 text-secondary">|</span>
+                    <small class="text-secondary">Information Storage Management (ISM) Project</small>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <small class="text-secondary-light">
+                        Lossless Engines: PDF-Deflate &bull; 7Z (LZMA2) &bull; ZIP &bull; GZIP &bull; BZIP2 &bull; LZMA
+                    </small>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <!-- Custom Application JS -->
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>
