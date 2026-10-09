@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🗜️ SmartCompress AI
+#  SmartCompress AI
 
 ### Intelligent, Entropy-Driven Lossless File & Batch Compression System
 *An Information Storage Management (ISM) Academic Research & Production Platform*
@@ -27,7 +27,7 @@
 
 ---
 
-## 📌 Overview & ISM Engineering Context
+## Overview & ISM Engineering Context
 
 In enterprise data centers, storage systems are governed by the **Information Storage Management (ISM)** lifecycle. Uncompressed raw datasets consume massive physical capacities in Primary Storage Area Networks (SAN), Network Attached Storage (NAS), and Cloud Object tiers, driving up operational expenses (OPEX) and network transmission latency.
 
@@ -40,24 +40,24 @@ Applying data compression blindly introduces critical engineering bottlenecks:
 
 ---
 
-## 🚀 Key Features
+## Notable Features
 
 | Feature | Description |
 |---|---|
-| 🧮 **Empirical Shannon Entropy Engine** | Analyzes byte frequency distribution $H(X) = -\sum p(i)\log_2 p(i)$ via streaming buffers without RAM exhaustion. |
-| 🤖 **Hybrid ML Decision Architecture** | Random Forest model trained on empirical benchmark runs, with automatic deterministic rule-based fallback. |
-| 📦 **6 Real Compression Engines** | Supports **PDF-Deflate, 7Z, ZIP, GZIP, BZIP2, and LZMA** with bit-for-bit integrity verification. |
-| 🎴 **Visual Card-Based Batch Studio** | Drag-and-drop visual queue with real-time PDF and image thumbnail rendering, intensity sliders, and Batch ZIP downloads. |
-| 📁 **Full Folder & Directory Uploads** | Recursive folder processing (`webkitdirectory`), hierarchical entropy aggregation, and archive generation (`.zip`, `.tar.gz`, `.tar.bz2`, `.tar.xz`, `.7z`). |
-| ⚡ **Live Multi-Algorithm Benchmarking** | Simultaneous race testing measuring compressed sizes, space saved (%), compression durations, and throughput (MB/s). |
-| 📊 **Storage Analytics Dashboard** | Real-time Chart.js telemetry tracking cumulative storage reclaimed, algorithm distribution, and savings by file category. |
-| 📑 **Archival PDF Technical Reports** | Automated ReportLab PDF generator complete with SHA-256 verification hashes, entropy gauges, and benchmark audits. |
-| 📱 **Progressive Web App (PWA)** | Installable desktop/mobile experience with offline caching via Service Worker. |
-| 🔒 **Enterprise-Grade Security** | Path traversal mitigations (`is_safe_path`), Werkzeug filename scrubbing, and isolated UUID operation namespaces. |
+|  **Empirical Shannon Entropy Engine** | Analyzes byte frequency distribution $H(X) = -\sum p(i)\log_2 p(i)$ via streaming buffers without RAM exhaustion. |
+|  **Hybrid ML Decision Architecture** | Random Forest model trained on empirical benchmark runs, with automatic deterministic rule-based fallback. |
+|  **6 Real Compression Engines** | Supports **PDF-Deflate, 7Z, ZIP, GZIP, BZIP2, and LZMA** with bit-for-bit integrity verification. |
+|  **Visual Card-Based Batch Studio** | Drag-and-drop visual queue with real-time PDF and image thumbnail rendering, intensity sliders, and Batch ZIP downloads. |
+|  **Full Folder & Directory Uploads** | Recursive folder processing (`webkitdirectory`), hierarchical entropy aggregation, and archive generation (`.zip`, `.tar.gz`, `.tar.bz2`, `.tar.xz`, `.7z`). |
+|  **Live Multi-Algorithm Benchmarking** | Simultaneous race testing measuring compressed sizes, space saved (%), compression durations, and throughput (MB/s). |
+|  **Storage Analytics Dashboard** | Real-time Chart.js telemetry tracking cumulative storage reclaimed, algorithm distribution, and savings by file category. |
+|  **Archival PDF Technical Reports** | Automated ReportLab PDF generator complete with SHA-256 verification hashes, entropy gauges, and benchmark audits. |
+|  **Progressive Web App (PWA)** | Installable desktop/mobile experience with offline caching via Service Worker. |
+|  **Enterprise-Grade Security** | Path traversal mitigations (`is_safe_path`), Werkzeug filename scrubbing, and isolated UUID operation namespaces. |
 
 ---
 
-## 🏗️ System Architecture
+##  System Architecture
 
 ```mermaid
 graph TD
@@ -87,7 +87,7 @@ graph TD
 
 ---
 
-## 📐 Information Theory & Shannon Entropy
+##  Information Theory & Shannon Entropy
 
 Shannon entropy measures the average information density and uncertainty in a discrete random byte stream:
 
@@ -117,7 +117,7 @@ Where:
 
 ---
 
-## ⚡ Compression Algorithms Matrix
+##  Compression Algorithms Matrix
 
 | Algorithm | Foundation | Compression Ratio | CPU Cost | Decompression Speed | Best Suited For |
 |:---|:---|:---:|:---:|:---:|:---|
@@ -130,18 +130,18 @@ Where:
 
 ---
 
-## 🎴 Visual Batch Studio
+##  Visual Batch Studio
 
 The **Batch Compression Studio** provides an interactive card-based workflow designed for handling multiple assets simultaneously:
 
-- **🖼️ Real Thumbnails:** Renders first-page PDF previews using PyMuPDF and image previews using Pillow.
-- **🎚️ Compression Level Slider:** Dynamically adjusts compression intensity between 0% and 100%.
-- **🤖 Smart Auto-Select:** Automatically assigns the best algorithm per card using the ML predictor or allows manual override.
-- **📦 Single-Click Batch ZIP:** Consolidates all completed files into a single downloaded archive via `/api/download_batch_zip`.
+- ** Real Thumbnails:** Renders first-page PDF previews using PyMuPDF and image previews using Pillow.
+- ** Compression Level Slider:** Dynamically adjusts compression intensity between 0% and 100%.
+- ** Smart Auto-Select:** Automatically assigns the best algorithm per card using the ML predictor or allows manual override.
+- ** Single-Click Batch ZIP:** Consolidates all completed files into a single downloaded archive via `/api/download_batch_zip`.
 
 ---
 
-## 💻 Quickstart & Installation
+##  Quickstart & Installation
 
 ### Prerequisites
 - **Python:** 3.10 to 3.14 (Verified across Windows, macOS, and Linux)
@@ -199,7 +199,7 @@ Open your browser and navigate to **`http://127.0.0.1:5000`**.
 
 ---
 
-## 📂 Project Directory Structure
+##  Project Directory Structure
 
 ```text
 SmartCompressAI/
@@ -277,7 +277,7 @@ SmartCompressAI/
 
 ---
 
-## 🌐 API & Route Reference
+##  API & Route Reference
 
 ### Web Routes
 | Endpoint | Method | Description |
@@ -303,7 +303,7 @@ SmartCompressAI/
 
 ---
 
-## 🔒 Security Architecture
+##  Security Architecture
 
 1. **Path Traversal Protection:** All file reads and downloads strictly validate that the resolved canonical path lies within approved directories (`uploads`, `compressed`, `reports`) using `is_safe_path()`.
 2. **Filename Sanitization:** All user-supplied filenames are sanitized through `werkzeug.utils.secure_filename()` with regex fallback to prevent directory escape characters (`..`, `/`, `\`).
@@ -313,32 +313,7 @@ SmartCompressAI/
 
 ---
 
-## 🎓 Viva & Exam Defense Guide
-
-<details>
-<summary><b>Click to expand academic viva questions & detailed answers</b></summary>
-<br>
-
-### 1. What is the fundamental significance of Shannon Entropy in storage tiering?
-> **Answer:** Shannon entropy measures the theoretical minimum average number of bits required to encode each symbol in a message without loss. In enterprise storage, computing byte entropy allows an automated tiering controller to predict whether deduplication or compression will yield physical storage reclamation before spending CPU cycles and disk I/O.
-
-### 2. Why does compressing a JPEG, MP4, or encrypted archive often increase file size?
-> **Answer:** JPEGs and MP4s are already compressed using lossy transform and perceptual entropy coding. Their byte distribution is almost uniform, approaching the maximum Shannon entropy of $8.0\text{ bits/byte}$. Lossless dictionary algorithms (LZ77/LZMA) cannot identify recurring patterns, resulting in literal byte storage alongside archive header metadata overhead (negative compression).
-
-### 3. How does the Burrows-Wheeler Transform (BZIP2) differ from Deflate (ZIP/GZIP)?
-> **Answer:** Deflate uses a sliding dictionary (LZ77) followed by Huffman coding. BZIP2 applies the Burrows-Wheeler Transform (BWT), a block-sorting algorithm that permutes characters without altering their frequencies so identical symbols cluster together, followed by Move-To-Front (MTF) coding and Huffman trees. BWT achieves superior ratios on repetitive text and code.
-
-### 4. Why use a Random Forest classifier instead of a simple lookup table?
-> **Answer:** File compressibility depends on complex, nonlinear interactions across multiple dimensions: file size, byte entropy, content category, and user objectives (latency vs. ratio). A Random Forest model captures these boundary dynamics effectively—for example, small files with moderate entropy favor ZIP over 7Z due to dictionary overhead, while large files with identical entropy favor 7Z.
-
-### 5. How does SmartCompress AI ensure mathematical lossless integrity?
-> **Answer:** The test suite performs automated roundtrip verification (`decompress_and_verify`) across all supported engines, decompressing the output back to raw bytes and calculating the SHA-256 cryptographic digest to verify 100% bit-for-bit identity against the original source.
-
-</details>
-
----
-
-## 🧪 Testing & Validation
+##  Testing & Validation
 
 The test suite is built on `pytest` and validates every component of the system:
 
@@ -357,7 +332,7 @@ python -m pytest --cov=. tests/
 
 ---
 
-## 🤝 Contributing
+##  Contributing
 
 Contributions, bug reports, and suggestions are welcome!
 
